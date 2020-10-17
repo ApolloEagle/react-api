@@ -1,40 +1,44 @@
-import React, { Component } from 'react'
-import Table from './Table'
-import Form from './Form'
+import React, { Component } from 'react';
+// import Table from './Table'
+// import Form from './Form'
+import ListForm from './components/ListForm';
 
 class App extends Component {
+  render() {
+    return <ListForm />;
+  }
 
-	state = {
-		characters : []
-	}
+  // state = {
+  // 	characters : []
+  // }
 
-	removeCharacter = index => {
-		const { characters } = this.state
-	
-		this.setState({
-			characters: characters.filter((character, i) => {
-				return i !== index
-			}),
-		})
-	}
+  // removeCharacter = index => {
+  // 	const { characters } = this.state
 
-	handleSubmit = character => {
-		this.setState({ 
-			characters: [...this.state.characters, character] 
-		})
-	}
+  // 	this.setState({
+  // 		characters: characters.filter((character, i) => {
+  // 			return i !== index
+  // 		}),
+  // 	})
+  // }
 
-	render() { 
+  // handleSubmit = character => {
+  // 	this.setState({
+  // 		characters: [...this.state.characters, character]
+  // 	})
+  // }
 
-		const { characters } = this.state
+  // render() {
 
-		return (
-			<div className="container">
-				<Form handleSubmit={this.handleSubmit}/>
-				<Table characterData={characters} removeCharacter={this.removeCharacter} />
-			</div>
-		)
-	}
+  // 	const { characters } = this.state
+
+  // 	return (
+  // 		<div className="container">
+  // 			<Form handleSubmit={this.handleSubmit}/>
+  // 			<Table characterData={characters} removeCharacter={this.removeCharacter} />
+  // 		</div>
+  // 	)
+  // }
 }
 
-export default App
+export default App;
