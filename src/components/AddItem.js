@@ -17,12 +17,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddItem = () => {
+const AddItem = ({ addItem }) => {
   const classes = useStyles();
+
   return (
     <Grid container>
       <Grid item xs={12} className={classes.root}>
-        <Button variant="contained" color="secondary" startIcon={<AddIcon />}>
+        <Button
+          onClick={addItem}
+          variant="contained"
+          color="secondary"
+          startIcon={<AddIcon />}
+        >
           Add Item
         </Button>
       </Grid>

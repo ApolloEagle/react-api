@@ -24,25 +24,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const List = () => {
+const List = ({ itemList }) => {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={12} className={classes.root}>
-        <Paper>
-          <ListItem />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} className={classes.root}>
-        <Paper>
-          <ListItem />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} className={classes.root}>
-        <Paper>
-          <ListItem />
-        </Paper>
-      </Grid>
+      {itemList.map((item) => (
+        <Grid key={item.id} item xs={12} className={classes.root}>
+          <Paper>
+            <ListItem key={item.id} value={item.value} />
+          </Paper>
+        </Grid>
+      ))}
     </Grid>
   );
 };

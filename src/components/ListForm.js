@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
 import Lists from './Lists';
@@ -47,17 +47,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListForm = () => {
+  const initialState = {
+    user: {
+      id: '1234',
+      lists: [
+        {
+          id: '1',
+          value: 'My First List',
+          incomplete: [{ id: 0, value: 'New Item' }],
+          complete: [],
+        },
+      ],
+    },
+  };
+
+  const incomplete = initialState.user.lists[0].incomplete[0];
+  const [items, setItems] = useState([incomplete]);
   const classes = useStyles();
+
   return (
     <Grid container>
       <Grid item xs={12} className={classes.lists}>
         <Lists />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
-        <AddItem />
+        <AddItem
+          addItem={() =>
+            setItems([...items, { id: items.length, value: 'New Item' }])
+          }
+        />
       </Grid>
       <Grid item xs={12} className={classes.list}>
-        <List />
+        <List itemList={items} />
       </Grid>
     </Grid>
   );

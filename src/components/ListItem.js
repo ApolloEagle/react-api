@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListItem = () => {
+const ListItem = ({ value }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.root}>
@@ -46,7 +46,7 @@ const ListItem = () => {
         <RadioButtonUncheckedIcon />
       </Grid>
       <Grid item xs={4} className={classes.itemName}>
-        Item Label
+        {value}
       </Grid>
       <Grid item xs={4} className={classes.delete}>
         <DeleteIcon />
