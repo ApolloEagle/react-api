@@ -54,15 +54,34 @@ const ListForm = () => {
         {
           id: '1',
           value: 'My First List',
-          incomplete: [{ id: 0, value: 'New Item' }],
+          incomplete: [],
           complete: [],
         },
       ],
     },
   };
 
-  const incomplete = initialState.user.lists[0].incomplete[0];
-  const [items, setItems] = useState([incomplete]);
+  // Hooks
+  const incomplete = initialState.user.lists[0].incomplete;
+  const complete = initialState.user.lists[0].complete;
+  const [count, updateCount] = useState(0);
+  const [items, updateItems] = useState(incomplete);
+  const [completedItems, completeItem] = useState(complete);
+
+  // Handlers
+  const handleAddItem = () => {
+    updateItems([...items, { id: count, value: 'New Item' }]);
+    updateCount(count + 1);
+  };
+  const handleDeleteItem = (id) => {
+    updateItems(items.filter((item) => item.id !== id));
+  };
+  const handleCompleteItem = (id, value) => {
+    updateItems(items.filter((item) => item.id !== id));
+    completeItem([...completedItems, { id: id, value: value }]);
+  };
+
+  // Style
   const classes = useStyles();
 
   return (
@@ -71,14 +90,14 @@ const ListForm = () => {
         <Lists />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
-        <AddItem
-          addItem={() =>
-            setItems([...items, { id: items.length, value: 'New Item' }])
-          }
-        />
+        <AddItem addItem={handleAddItem} />
       </Grid>
       <Grid item xs={12} className={classes.list}>
-        <List itemList={items} />
+        <List
+          itemList={items}
+          deleteItem={handleDeleteItem}
+          completeItem={handleCompleteItem}
+        />
       </Grid>
     </Grid>
   );

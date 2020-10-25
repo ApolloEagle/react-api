@@ -24,14 +24,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const List = ({ itemList }) => {
+const List = ({ itemList, deleteItem, completeItem }) => {
   const classes = useStyles();
   return (
     <Grid container>
       {itemList.map((item) => (
         <Grid key={item.id} item xs={12} className={classes.root}>
           <Paper>
-            <ListItem key={item.id} value={item.value} />
+            <ListItem
+              key={item.id}
+              value={item.value}
+              id={item.id}
+              deleteItem={deleteItem}
+              completeItem={completeItem}
+            />
           </Paper>
         </Grid>
       ))}

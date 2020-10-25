@@ -24,7 +24,7 @@ const AddItem = ({ addItem }) => {
     <Grid container>
       <Grid item xs={12} className={classes.root}>
         <Button
-          onClick={addItem}
+          onClick={() => addItem()}
           variant="contained"
           color="secondary"
           startIcon={<AddIcon />}
