@@ -41,7 +41,7 @@ const ListItem = ({ value, id, deleteItem, completeItem }) => {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={4} className={classes.radio}>
-        <IconButton aria-label="delete" onClick={() => completeItem(id, value)}>
+        <IconButton onClick={() => completeItem(id, value)}>
           <RadioButtonUncheckedIcon />
         </IconButton>
       </Grid>
@@ -49,7 +49,7 @@ const ListItem = ({ value, id, deleteItem, completeItem }) => {
         {value}
       </Grid>
       <Grid item xs={4} className={classes.delete}>
-        <IconButton aria-label="delete" onClick={() => deleteItem(id)}>
+        <IconButton onClick={() => deleteItem(id)}>
           <DeleteIcon />
         </IconButton>
       </Grid>

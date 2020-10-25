@@ -65,19 +65,23 @@ const ListForm = () => {
   const incomplete = initialState.user.lists[0].incomplete;
   const complete = initialState.user.lists[0].complete;
   const [count, updateCount] = useState(0);
-  const [items, updateItems] = useState(incomplete);
+  const [incompleteItems, updateItems] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
 
   // Handlers
   const handleAddItem = () => {
-    updateItems([...items, { id: count, value: 'New Item' }]);
+    updateItems([
+      ...incompleteItems,
+      { id: count, value: 'New Item ' + count },
+    ]);
     updateCount(count + 1);
   };
   const handleDeleteItem = (id) => {
-    updateItems(items.filter((item) => item.id !== id));
+    updateItems(incompleteItems.filter((item) => item.id !== id));
+    completeItem(completedItems.filter((item) => item.id !== id));
   };
   const handleCompleteItem = (id, value) => {
-    updateItems(items.filter((item) => item.id !== id));
+    updateItems(incompleteItems.filter((item) => item.id !== id));
     completeItem([...completedItems, { id: id, value: value }]);
   };
 
@@ -94,7 +98,8 @@ const ListForm = () => {
       </Grid>
       <Grid item xs={12} className={classes.list}>
         <List
-          itemList={items}
+          incompleteList={incompleteItems}
+          completeList={completedItems}
           deleteItem={handleDeleteItem}
           completeItem={handleCompleteItem}
         />
