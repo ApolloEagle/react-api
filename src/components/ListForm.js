@@ -101,7 +101,14 @@ const ListForm = () => {
   return (
     <Grid container>
       <Grid item xs={12} className={classes.lists}>
-        <Lists />
+        <Lists
+          addItem={handleAddItem}
+          open={open}
+          closeModal={handleClose}
+          openModal={handleOpen}
+          itemValue={value}
+          addInput={handleInput}
+        />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
         <AddItem
