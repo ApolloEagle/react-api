@@ -36,13 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const List = ({
-  incompleteList,
-  completeList,
-  deleteItem,
-  completeItem,
-  completed,
-}) => {
+const List = ({ incompleteList, completeList, deleteItem, completeItem }) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -67,14 +67,15 @@ const ListForm = () => {
   const [count, updateCount] = useState(0);
   const [incompleteItems, updateItems] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
 
   // Handlers
   const handleAddItem = () => {
-    updateItems([
-      ...incompleteItems,
-      { id: count, value: 'New Item ' + count },
-    ]);
+    updateItems([...incompleteItems, { id: count, value: value }]);
     updateCount(count + 1);
+    setOpen(false);
+    setValue('');
   };
   const handleDeleteItem = (id) => {
     updateItems(incompleteItems.filter((item) => item.id !== id));
@@ -83,6 +84,15 @@ const ListForm = () => {
   const handleCompleteItem = (id, value) => {
     updateItems(incompleteItems.filter((item) => item.id !== id));
     completeItem([...completedItems, { id: id, value: value }]);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleInput = (inputValue) => {
+    setValue(inputValue);
   };
 
   // Style
@@ -94,7 +104,14 @@ const ListForm = () => {
         <Lists />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
-        <AddItem addItem={handleAddItem} />
+        <AddItem
+          addItem={handleAddItem}
+          open={open}
+          closeModal={handleClose}
+          openModal={handleOpen}
+          itemValue={value}
+          addInput={handleInput}
+        />
       </Grid>
       <Grid item xs={12} className={classes.list}>
         <List
