@@ -56,7 +56,7 @@ const AddItem = ({
           className={classes.modal}
           disableBackdropClick
         >
-          <DialogTitle id="form-dialog-title">Enter Item</DialogTitle>
+          <DialogTitle id="item-dialog">Enter Item</DialogTitle>
           <DialogContent>
             <Input
               value={itemValue}

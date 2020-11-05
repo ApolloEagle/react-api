@@ -65,25 +65,29 @@ const ListForm = () => {
   const incomplete = initialState.user.lists[0].incomplete;
   const complete = initialState.user.lists[0].complete;
   const [count, updateCount] = useState(0);
-  const [incompleteItems, updateItems] = useState(incomplete);
+  const [incompleteItems, incompleteItem] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
   // Handlers
   const handleAddItem = () => {
-    updateItems([...incompleteItems, { id: count, value: value }]);
+    incompleteItem([...incompleteItems, { id: count, value: value }]);
     updateCount(count + 1);
     setOpen(false);
     setValue('');
   };
   const handleDeleteItem = (id) => {
-    updateItems(incompleteItems.filter((item) => item.id !== id));
+    incompleteItem(incompleteItems.filter((item) => item.id !== id));
     completeItem(completedItems.filter((item) => item.id !== id));
   };
   const handleCompleteItem = (id, value) => {
-    updateItems(incompleteItems.filter((item) => item.id !== id));
+    incompleteItem(incompleteItems.filter((item) => item.id !== id));
     completeItem([...completedItems, { id: id, value: value }]);
+  };
+  const handleUndoItem = (id, value) => {
+    completeItem(completedItems.filter((item) => item.id !== id));
+    incompleteItem([...incompleteItems, { id: id, value: value }]);
   };
   const handleClose = () => {
     setOpen(false);
@@ -126,6 +130,7 @@ const ListForm = () => {
           completeList={completedItems}
           deleteItem={handleDeleteItem}
           completeItem={handleCompleteItem}
+          undoItem={handleUndoItem}
         />
       </Grid>
     </Grid>

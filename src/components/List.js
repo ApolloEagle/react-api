@@ -36,7 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const List = ({ incompleteList, completeList, deleteItem, completeItem }) => {
+const List = ({
+  incompleteList,
+  completeList,
+  deleteItem,
+  completeItem,
+  undoItem,
+}) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -61,6 +67,7 @@ const List = ({ incompleteList, completeList, deleteItem, completeItem }) => {
                   id={item.id}
                   deleteItem={deleteItem}
                   completeItem={completeItem}
+                  completed={false}
                 />
               </Paper>
             </Grid>
@@ -76,6 +83,8 @@ const List = ({ incompleteList, completeList, deleteItem, completeItem }) => {
                   id={item.id}
                   deleteItem={deleteItem}
                   completeItem={completeItem}
+                  undoItem={undoItem}
+                  completed={true}
                 />
               </Paper>
             </Grid>

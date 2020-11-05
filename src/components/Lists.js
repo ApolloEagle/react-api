@@ -80,7 +80,7 @@ const Lists = ({
           className={classes.modal}
           disableBackdropClick
         >
-          <DialogTitle id="form-dialog-title">Enter List Name</DialogTitle>
+          <DialogTitle id="list-dialog">Enter List Name</DialogTitle>
           <DialogContent>
             <Input
               value={itemValue}
