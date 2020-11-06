@@ -38,12 +38,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Lists = ({
-  addItem,
   open,
   closeModal,
   openModal,
   itemValue,
   addInput,
+  listItems,
+  addList,
 }) => {
   const classes = useStyles();
   return (
@@ -62,16 +63,18 @@ const Lists = ({
                 Create List
               </Button>
             </MenuItem>
-            <MenuItem>
-              <Grid container>
-                <Grid item xs={10}>
-                  My List
+            {listItems.map((item) => (
+              <MenuItem>
+                <Grid container>
+                  <Grid item xs={10}>
+                    {item.value}
+                  </Grid>
+                  <Grid item xs={2}>
+                    <CheckIcon />
+                  </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                  <CheckIcon />
-                </Grid>
-              </Grid>
-            </MenuItem>
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <Dialog
@@ -91,7 +94,7 @@ const Lists = ({
             <Button onClick={() => closeModal()} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => addItem()} color="primary">
+            <Button onClick={() => addList()} color="primary">
               Save
             </Button>
           </DialogActions>

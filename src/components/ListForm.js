@@ -52,7 +52,7 @@ const ListForm = () => {
       id: '1234',
       lists: [
         {
-          id: '1',
+          id: '0',
           value: 'My First List',
           incomplete: [],
           complete: [],
@@ -64,17 +64,21 @@ const ListForm = () => {
   // Hooks
   const incomplete = initialState.user.lists[0].incomplete;
   const complete = initialState.user.lists[0].complete;
-  const [count, updateCount] = useState(0);
+  const lists = initialState.user.lists;
+  const [itemCount, updateItemCount] = useState(0);
+  const [listCount, updateListCount] = useState(0);
   const [incompleteItems, incompleteItem] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
-  const [open, setOpen] = useState(false);
+  const [listItems, listItem] = useState(lists);
+  const [itemOpen, setItemOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(false);
   const [value, setValue] = useState('');
 
   // Handlers
   const handleAddItem = () => {
-    incompleteItem([...incompleteItems, { id: count, value: value }]);
-    updateCount(count + 1);
-    setOpen(false);
+    incompleteItem([...incompleteItems, { id: itemCount, value: value }]);
+    updateItemCount(itemCount + 1);
+    setItemOpen(false);
     setValue('');
   };
   const handleDeleteItem = (id) => {
@@ -89,11 +93,22 @@ const ListForm = () => {
     completeItem(completedItems.filter((item) => item.id !== id));
     incompleteItem([...incompleteItems, { id: id, value: value }]);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleAddList = () => {
+    listItem([...listItems, { id: listCount, value: value }]);
+    updateListCount(listCount + 1);
+    setValue('');
   };
-  const handleOpen = () => {
-    setOpen(true);
+  const handleItemClose = () => {
+    setItemOpen(false);
+  };
+  const handleItemOpen = () => {
+    setItemOpen(true);
+  };
+  const handleListOpen = () => {
+    setListOpen(true);
+  };
+  const handleListClose = () => {
+    setListOpen(false);
   };
   const handleInput = (inputValue) => {
     setValue(inputValue);
@@ -107,19 +122,21 @@ const ListForm = () => {
       <Grid item xs={12} className={classes.lists}>
         <Lists
           addItem={handleAddItem}
-          open={open}
-          closeModal={handleClose}
-          openModal={handleOpen}
+          open={listOpen}
+          closeModal={handleListClose}
+          openModal={handleListOpen}
           itemValue={value}
           addInput={handleInput}
+          listItems={listItems}
+          addList={handleAddList}
         />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
         <AddItem
           addItem={handleAddItem}
-          open={open}
-          closeModal={handleClose}
-          openModal={handleOpen}
+          open={itemOpen}
+          closeModal={handleItemClose}
+          openModal={handleItemOpen}
           itemValue={value}
           addInput={handleInput}
         />
