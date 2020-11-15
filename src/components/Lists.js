@@ -45,6 +45,7 @@ const Lists = ({
   addInput,
   listItems,
   addList,
+  selectList,
 }) => {
   const classes = useStyles();
   return (
@@ -63,18 +64,21 @@ const Lists = ({
                 Create List
               </Button>
             </MenuItem>
-            {listItems.map((item) => (
-              <MenuItem>
-                <Grid container>
-                  <Grid item xs={10}>
-                    {item.value}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <CheckIcon />
-                  </Grid>
-                </Grid>
-              </MenuItem>
-            ))}
+            {listItems.map(
+              (item) =>
+                item.value && (
+                  <MenuItem key={item.id} onClick={() => selectList(item.id)}>
+                    <Grid container>
+                      <Grid item xs={10}>
+                        {item.value}
+                      </Grid>
+                      <Grid item xs={2}>
+                        {item.selected && <CheckIcon />}
+                      </Grid>
+                    </Grid>
+                  </MenuItem>
+                )
+            )}
           </Select>
         </FormControl>
         <Dialog
@@ -94,7 +98,12 @@ const Lists = ({
             <Button onClick={() => closeModal()} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => addList()} color="primary">
+            <Button
+              onClick={() => {
+                addList();
+              }}
+              color="primary"
+            >
               Save
             </Button>
           </DialogActions>

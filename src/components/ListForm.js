@@ -52,8 +52,9 @@ const ListForm = () => {
       id: '1234',
       lists: [
         {
-          id: '0',
+          id: 0,
           value: 'My First List',
+          selected: true,
           incomplete: [],
           complete: [],
         },
@@ -62,14 +63,15 @@ const ListForm = () => {
   };
 
   // Hooks
-  const incomplete = initialState.user.lists[0].incomplete;
-  const complete = initialState.user.lists[0].complete;
   const lists = initialState.user.lists;
+  const [listIndex, setListIndex] = useState(0);
+  const [newList, createNewList] = useState(lists);
+  const incomplete = newList[listIndex].incomplete;
+  const complete = newList[listIndex].complete;
   const [itemCount, updateItemCount] = useState(0);
-  const [listCount, updateListCount] = useState(0);
+  const [listCount, updateListCount] = useState(1);
   const [incompleteItems, incompleteItem] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
-  const [listItems, listItem] = useState(lists);
   const [itemOpen, setItemOpen] = useState(false);
   const [listOpen, setListOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -94,9 +96,24 @@ const ListForm = () => {
     incompleteItem([...incompleteItems, { id: id, value: value }]);
   };
   const handleAddList = () => {
-    listItem([...listItems, { id: listCount, value: value }]);
-    updateListCount(listCount + 1);
+    createNewList([
+      ...newList,
+      {
+        id: listCount,
+        value: value,
+        selected: true,
+        complete: [],
+        incomplete: [],
+      },
+    ]);
+    newList.map((item) => {
+      return item.id !== listCount
+        ? (item.selected = false)
+        : (item.selected = true);
+    });
     setValue('');
+    setListOpen(false);
+    updateListCount(listCount + 1);
   };
   const handleItemClose = () => {
     setItemOpen(false);
@@ -113,6 +130,12 @@ const ListForm = () => {
   const handleInput = (inputValue) => {
     setValue(inputValue);
   };
+  const handleListSelect = (id) => {
+    setListIndex(id);
+    newList.map((item) => {
+      return item.id !== id ? (item.selected = false) : (item.selected = true);
+    });
+  };
 
   // Style
   const classes = useStyles();
@@ -121,14 +144,14 @@ const ListForm = () => {
     <Grid container>
       <Grid item xs={12} className={classes.lists}>
         <Lists
-          addItem={handleAddItem}
           open={listOpen}
           closeModal={handleListClose}
           openModal={handleListOpen}
           itemValue={value}
           addInput={handleInput}
-          listItems={listItems}
+          listItems={newList}
           addList={handleAddList}
+          selectList={handleListSelect}
         />
       </Grid>
       <Grid item xs={12} className={classes.addItem}>
