@@ -63,15 +63,14 @@ const ListForm = () => {
   };
 
   // Hooks
-  const lists = initialState.user.lists;
-  const [listIndex, setListIndex] = useState(0);
-  const [newList, createNewList] = useState(lists);
-  const incomplete = newList[listIndex].incomplete;
-  const complete = newList[listIndex].complete;
-  const [itemCount, updateItemCount] = useState(0);
-  const [listCount, updateListCount] = useState(1);
+  const [index, setIndex] = useState(0);
+  const [lists, newList] = useState(initialState.user.lists);
+  const incomplete = lists[index].incomplete;
+  const complete = lists[index].complete;
   const [incompleteItems, incompleteItem] = useState(incomplete);
   const [completedItems, completeItem] = useState(complete);
+  const [itemCount, updateItemCount] = useState(0);
+  const [listCount, updateListCount] = useState(1);
   const [itemOpen, setItemOpen] = useState(false);
   const [listOpen, setListOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -96,8 +95,8 @@ const ListForm = () => {
     incompleteItem([...incompleteItems, { id: id, value: value }]);
   };
   const handleAddList = () => {
-    createNewList([
-      ...newList,
+    newList([
+      ...lists,
       {
         id: listCount,
         value: value,
@@ -106,7 +105,7 @@ const ListForm = () => {
         incomplete: [],
       },
     ]);
-    newList.map((item) => {
+    lists.map((item) => {
       return item.id !== listCount
         ? (item.selected = false)
         : (item.selected = true);
@@ -114,6 +113,7 @@ const ListForm = () => {
     setValue('');
     setListOpen(false);
     updateListCount(listCount + 1);
+    setIndex(listCount);
   };
   const handleItemClose = () => {
     setItemOpen(false);
@@ -131,8 +131,8 @@ const ListForm = () => {
     setValue(inputValue);
   };
   const handleListSelect = (id) => {
-    setListIndex(id);
-    newList.map((item) => {
+    setIndex(id);
+    lists.map((item) => {
       return item.id !== id ? (item.selected = false) : (item.selected = true);
     });
   };
@@ -149,7 +149,7 @@ const ListForm = () => {
           openModal={handleListOpen}
           itemValue={value}
           addInput={handleInput}
-          listItems={newList}
+          listItems={lists}
           addList={handleAddList}
           selectList={handleListSelect}
         />
@@ -166,6 +166,7 @@ const ListForm = () => {
       </Grid>
       <Grid item xs={12} className={classes.list}>
         <List
+          list={lists[index]}
           incompleteList={incompleteItems}
           completeList={completedItems}
           deleteItem={handleDeleteItem}
